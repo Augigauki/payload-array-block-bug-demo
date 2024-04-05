@@ -2,7 +2,7 @@
 
 This is a quick demo set up to showcase a bug with PayloadCMS when using both localization and versioning on a collection that has a Block field that itself has blocks with array fields.
 
-Only tested with Postgres-DB. Tested on latest versions of Payload and postgres-db.
+Works fine when using MongoDB, only an issue for Postgres-DB as far as I can tell.
 
 Steps to reproduce:
 
@@ -23,7 +23,11 @@ Document should save properly.
 
 Document gives error on saving.
 
-The bug goes away when either versioning or localization is disabled. If you only add content to the non-locallized fields, you never get the bug. It only happens as soon as more than one block has an array with a localized field with content in it.
+---
+
+The bug goes away when either versioning or localization is disabled. If you only add content to the non-locallized fields, you never get the bug. It only happens as soon as more than one block has a separate instance of the same array with a localized field with content in it.
+
+It does work fine if you have multiple blocks with arrays that are separate. For instance selecting one "Item" Block and one "Card" Block works as expected.
 
 ```txt
 [14:08:09] ERROR (payload): There was an error cleaning up old versions for the collection pages
