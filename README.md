@@ -7,13 +7,13 @@ Works fine when using MongoDB, only an issue for Postgres-DB as far as I can tel
 Steps to reproduce:
 
 1. Clone repo
-2. Create a new page
-3. Add a block to the layout, selecting "Item" as the block
-4. Add an item (or more) to the block
-5. Add some content to either textfield
-6. Add another block to the layout
-7. Type some content in either text field
-8. Save
+1. Create a new page
+1. Add a block to the layout, selecting "Item" as the block
+1. Add an item (or more) to the block
+1. Add some content to localized textfield
+1. Add another block to the layout, selecting "Item" again
+1. Add some content to localized textfield
+1. Save
 
 ## Expected result
 
