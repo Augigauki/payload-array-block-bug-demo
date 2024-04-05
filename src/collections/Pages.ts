@@ -10,11 +10,15 @@ export const Pages: CollectionConfig = {
         {
             name: 'name',
             type: 'text',
-            localized: true,
+            //localized: true,
         },
         {
             name: 'layout',
             type: 'blocks',
+            labels: {
+                singular: 'Block',
+                plural: 'Blocks',
+            },
             blocks: [ItemsBlock]
         }
 

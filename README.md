@@ -1,42 +1,35 @@
-# Payload Blank Template
+# PayloadCMS bug demo repo
 
-A blank template for [Payload](https://github.com/payloadcms/payload) to help you get up and running quickly. This repo may have been created by running `npx create-payload-app@latest` and selecting the "blank" template or by cloning this template on [Payload Cloud](https://payloadcms.com/new/clone/blank).
+This is a quick demo set up to showcase a bug with PayloadCMS when using both localization and versioning on a collection that has a Block field that itself has blocks with array fields.
 
-See the official [Examples Directory](https://github.com/payloadcms/payload/tree/main/examples) for details on how to use Payload in a variety of different ways.
+Only tested with Postgres-DB. Tested on latest versions of Payload and postgres-db.
 
-## Development
+Steps to reproduce:
 
-To spin up the project locally, follow these steps:
+1. Clone repo
+2. Create a new page
+3. Add a block to the layout, selecting "Item" as the block
+4. Add an item (or more) to the block
+5. Add some content to either textfield
+6. Add another block to the layout
+7. Type some content in either text field
+8. Save
 
-1. First clone the repo
-1. Then `cd YOUR_PROJECT_REPO && cp .env.example .env`
-1. Next `yarn && yarn dev` (or `docker-compose up`, see [Docker](#docker))
-1. Now `open http://localhost:3000/admin` to access the admin panel
-1. Create your first admin user using the form on the page
+## Expected result
 
-That's it! Changes made in `./src` will be reflected in your app.
+Document should save properly.
 
-### Docker
+## Actual result
 
-Alternatively, you can use [Docker](https://www.docker.com) to spin up this project locally. To do so, follow these steps:
+Document gives error on saving.
 
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
+The bug goes away when either versioning or localization is disabled. If you only add content to the non-locallized fields, you never get the bug. It only happens as soon as more than one block has an array with a localized field with content in it.
 
-That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
-
-## Production
-
-To run Payload in production, you need to build and serve the Admin panel. To do so, follow these steps:
-
-1. First invoke the `payload build` script by running `yarn build` or `npm run build` in your project root. This creates a `./build` directory with a production-ready admin bundle.
-1. Then run `yarn serve` or `npm run serve` to run Node in production and serve Payload from the `./build` directory.
-
-### Deployment
-
-The easiest way to deploy your project is to use [Payload Cloud](https://payloadcms.com/new/import), a one-click hosting solution to deploy production-ready instances of your Payload apps directly from your GitHub repo. You can also deploy your app manually, check out the [deployment documentation](https://payloadcms.com/docs/production/deployment) for full details.
-
-## Questions
-
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+```txt
+[14:08:09] ERROR (payload): There was an error cleaning up old versions for the collection pages
+[14:08:09] ERROR (payload): TypeError: Cannot read properties of undefined (reading 'version')
+    at saveVersion (/Users/username/Documents/Digiveloper/testing/arrayblock/node_modules/payload/src/versions/saveVersion.ts:151:31)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at updateByID (/Users/username/Documents/Digiveloper/testing/arrayblock/node_modules/payload/src/collections/operations/updateByID.ts:280:16)
+    at updateByIDHandler (/Users/username/Documents/Digiveloper/testing/arrayblock/node_modules/payload/src/collections/requestHandlers/updateByID.ts:36:17)
+```
