@@ -1,5 +1,6 @@
 import { CollectionConfig } from "payload/types";
 import { ItemsBlock } from "../Blocks/Highlights";
+import { CardsBlock } from "../Blocks/Cards";
 
 export const Pages: CollectionConfig = {
     slug: 'pages',
@@ -19,7 +20,7 @@ export const Pages: CollectionConfig = {
                 singular: 'Block',
                 plural: 'Blocks',
             },
-            blocks: [ItemsBlock]
+            blocks: [ItemsBlock, CardsBlock]
         }
 
 
